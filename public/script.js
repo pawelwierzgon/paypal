@@ -1,12 +1,12 @@
 // Fetch functions
 async function fetchAsyncGet(url) {
-  let response = await fetch('https://paypal-delta.vercel.app/' + url);
+  let response = await fetch(url);
   let data = await response.json();
   return data;
 }
   
 async function fetchAsyncPost(url, body) {
-  let response = await fetch('https://paypal-delta.vercel.app/' + url, {
+  let response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ let dropinInstance = null;
 // Fake signing-in and get the clientId
 signInBtn.addEventListener('click', () => {
   signInBtn.disabled = true;
-  fetchAsyncGet('get-customer-id').then(res => {
+  fetchAsyncGet('./get-customer-id').then(res => {
     if (res.token) {
       hiddenDiv.style = 'display: flex';
       signInBtn.style = 'display: none';
@@ -60,6 +60,7 @@ signInBtn.addEventListener('click', () => {
 // Purchase
 purchaseBtn.addEventListener('click', () => {
   purchaseBtn.disabled = true;
+  errorMsg.textContent = '';
   dropinInstance.requestPaymentMethod((err, payload) => {
     if (err) {
       errorMsg.textContent = err;
@@ -67,7 +68,7 @@ purchaseBtn.addEventListener('click', () => {
       return;
     }
     // Send payload.nonce to server
-    fetchAsyncPost('checkout', {nonce: payload.nonce}).then(res => {
+    fetchAsyncPost('./checkout', {nonce: payload.nonce}).then(res => {
       if (res.status) {
         document.querySelector('#order-id').textContent = res.paymentId;
         document.querySelector('#refund-btn').dataset.orderId = res.paymentId;
@@ -75,6 +76,7 @@ purchaseBtn.addEventListener('click', () => {
         document.querySelector('#refund').style = 'display: flex';
       } else {
         errorMsg.textContent = res.message;
+        purchaseBtn.disabled = false;
       }
     });
   });
@@ -84,7 +86,7 @@ purchaseBtn.addEventListener('click', () => {
 refundBtn.addEventListener('click', () => {
   refundBtn.disabled = true;
   errorMsg.textContent = '';
-  fetchAsyncPost('refund', {orderId: refundBtn.dataset.orderId}).then(res => {
+  fetchAsyncPost('./refund', {orderId: refundBtn.dataset.orderId}).then(res => {
     if (res.success) {
       errorMsg.textContent = 'Refund successful!';
       refundBtn.style = 'display: none';

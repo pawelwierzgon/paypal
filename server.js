@@ -70,34 +70,43 @@ app.post('/checkout', (req, res) => {
     }
   }, (err, result) => {
     if (result.success) {
+      // If the payment went through, send back the id
       res.send({
         status: result.success,
         paymentId: result.transaction.paymentReceipt.id
       })
     } else {
-      res.send({status: result.success});
+      // Send generic error if the payment hasn't gone through
+      res.send({status: false, message: 'There was a problem processing the payment; please double check your payment information and try again.'});
     }
   });
 });
 
 // Refunding transactions
 app.post('/refund', (req, res) => {
+  // Find transaction by id
   gateway.transaction.search(search => {
     search.id().is(req.body.orderId);
   }, (err, response) => {
-    response.each((err, transaction) => {
-      // Refund if settled/settling
-      if (transaction.status === 'settled' || transaction.status === 'settling') {
-        gateway.transaction.refund(req.body.orderId, (err, result) => {
-          res.send({success: result.success, message: result.message});
-        });
-      } else {
-        // Void the transaction
-        gateway.transaction.void(req.body.orderId, (err, result) => {
-          res.send({success: result.success, message: result.message});
-        });
-      }
-    });
+    // Check if transaction is found
+    if (response.ids.length > 0) {
+      response.each((err, transaction) => {
+        // Refund if settled/settling
+        if (transaction.status === 'settled' || transaction.status === 'settling') {
+          gateway.transaction.refund(req.body.orderId, (err, result) => {
+            res.send({success: result.success, message: result.message});
+          });
+        } else if (transaction.status === 'authorized' || transaction.status === 'submitted_for_settlement' || transaction.status === 'settlement_pending'){
+          // Void the transaction
+          gateway.transaction.void(req.body.orderId, (err, result) => {
+            res.send({success: result.success, message: result.message});
+          });
+        }
+      });
+    } else {
+      // Generic error if transaction is not found
+      res.send({success: false, message: 'There was a problem with processing the refund. Please try again later.'});
+    }
   });
 });
 
