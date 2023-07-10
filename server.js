@@ -1,6 +1,7 @@
 const express = require('express');
 const braintree = require('braintree');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 require('dotenv').config();
@@ -14,6 +15,10 @@ const gateway = new braintree.BraintreeGateway({
   publicKey: process.env.PUBLIC_KEY,
   privateKey: process.env.PRIVATE_KEY
 });
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/index.html'));
+})
 
 // Generate customer ID for 'test' user
 app.get('/get-customer-id', (req, res) => {
