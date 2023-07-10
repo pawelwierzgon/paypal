@@ -1,12 +1,12 @@
 // Fetch functions
 async function fetchAsyncGet(url) {
-  let response = await fetch('http://127.0.0.1:3000/' + url);
+  let response = await fetch('https://paypal-delta.vercel.app/' + url);
   let data = await response.json();
   return data;
 }
   
 async function fetchAsyncPost(url, body) {
-  let response = await fetch('http://127.0.0.1:3000/' + url, {
+  let response = await fetch('https://paypal-delta.vercel.app/' + url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
