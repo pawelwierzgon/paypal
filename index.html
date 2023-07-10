@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Checkout</title>
+    <script src="https://js.braintreegateway.com/web/dropin/1.38.1/js/dropin.min.js"></script>
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="big-container">
+      <div id="small-container">
+        <div id="scrollable-container">
+          <div id="order">
+            <button id="sign-in-btn">Sign In</button>
+            <div id="hidden" style="display: none">
+              <h1>Checkout</h1>
+              <div id="shopping-cart">
+                <b>Shopping cart:</b>
+                <ul>
+                  <li>1x Item 1 - €10.00</li>
+                  <li>1x Item 2 - €5.20</li>
+                  <li>1x Item 3 - €1.50</li>
+                </ul>
+                Total: €16.70
+              </div>
+              <div id="dropin-container"></div>
+              <button id="purchase-btn" style="display: none">Purchase</button>
+            </div>
+          </div>
+          <div id="refund" style="display: none">
+            Order id: <span id="order-id"></span>
+            <button id="refund-btn" data-order-id="">Refund</button>
+          </div>
+          <div id="error-msg"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

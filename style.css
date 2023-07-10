@@ -1,0 +1,124 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#big-container {
+  width: 100vw; height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgray;
+}
+
+#small-container {
+  width: 500px; height: 700px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  border: 2px solid lightblue;
+  border-radius: 1rem;
+  background-color: white;
+  overflow: hidden;
+}
+
+#scrollable-container {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: 490px;
+  padding: 0 2rem;
+  margin: 1rem 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#hidden {
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 2rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 5px;
+  background: lightblue;
+  border-radius: 2rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 1.5rem;
+}
+
+#shopping-cart {
+  border: 2px solid lightblue;
+  border-radius: 2rem;
+  background-color: lightblue;
+  padding: 1rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+  #shopping-cart ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  #shopping-cart ul > li {
+    height: 1rem;
+    line-height: 0.5rem;
+    display: block;
+    border: 2px solid white;
+    background-color: white;
+    border-radius: 2rem;
+    margin: 0.5rem 0;
+    padding: 1rem;
+  }
+
+#refund {
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  padding: 0.8rem;
+  border: 2px solid lightblue;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+
+  button:hover,
+  button:active {
+    background-color: lightblue;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    color: transparent;
+    background-color: white;
+    background-image: url('./loading.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
