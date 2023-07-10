@@ -20,9 +20,8 @@ app.get('/get-customer-id', (req, res) => {
   gateway.clientToken.generate({
     customerId: 'test'
   }, (err, response) => {
-    const clientToken = response.clientToken
     res.send({
-      token: clientToken
+      token: response.clientToken
     })
   });
 });
@@ -98,3 +97,5 @@ app.post('/refund', (req, res) => {
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 });
+
+module.exports = app;
